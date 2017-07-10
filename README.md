@@ -1,9 +1,9 @@
 # mhjServer
 美好家1.0通讯服务器，基于spServer消费者模式。
 
-目录说明
+# 目录说明
 
-MHJDeviceServer：设备服务端
+MHJDeviceServer：设备服务端，处理协议接收到的数据并转发给目标设备。
 
 MHJServerShared：服务器共用工程，本类和调度服务端共用，目录内协议申明服务端、客户端共用。
 
