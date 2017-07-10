@@ -1,0 +1,17 @@
+/工程配置说明
+
+1、编译libevent（编译请参照readme）
+2、编译spserver（spserver编译有两处错误，需要手工修改）
+在spioutils.cpp文件头加入 #include "sys/stat.h"
+在testthreadpool.cpp文件，将 int seconds = (int) arg; 修改为 long seconds = (long) arg;
+3、将spserver编译生成到libspserver.a 文件和.so文件拷贝到 /usr/local/lib目录内
+4、配置/etc/ld.so.conf文件，将/usr/local/lib文件加入路径
+sudo vim /etc/ld.so.conf
+换行加入 /usr/local/lib
+退出
+5、运行/sbin/ldconfig应用设置
+6、需要centOS的防火墙，否则外网无法链接。
+7、安装boost库 文件路径：192.168.5.10/安装光盘/编程工具 内
+在boost库目录下 运行
+./bootstrap.sh --prefix=/usr/local
+./b2 install --with=all

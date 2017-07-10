@@ -1,0 +1,1 @@
+odb -d mysql -o ${workspace_loc:/${ProjName}/database/migration} --generate-query --generate-schema ${workspace_loc:/${ProjName}/database}/MHJDatabase.hxx

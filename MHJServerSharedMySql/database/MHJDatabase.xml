@@ -1,0 +1,389 @@
+<changelog xmlns="http://www.codesynthesis.com/xmlns/odb/changelog" database="mysql" version="1">
+  <changeset version="25">
+    <alter-table name="MHJDeviceChild">
+      <add-column name="ImgIco" type="TEXT" null="true"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="24">
+    <alter-table name="MHJDeviceChild">
+      <add-column name="defineChangeTime" type="DATETIME" null="true"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="23">
+    <alter-table name="MHJDeviceVirtualDefine">
+      <add-column name="deviceKey" type="BIGINT UNSIGNED" null="false"/>
+      <add-index name="deviceKey_i">
+        <column name="deviceKey"/>
+      </add-index>
+      <drop-index name="Key_i"/>
+      <drop-column name="Key"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="22">
+    <alter-table name="MHJDeviceVirtualDefine">
+      <add-column name="defineTime" type="DATETIME" null="false"/>
+      <drop-foreign-key name="MHJDeviceVirtualDefine_Key_fk"/>
+      <drop-foreign-key name="MHJDeviceVirtualDefine_targetKey_fk"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="21">
+    <add-table name="MHJDeviceVirtualDefine" options="ENGINE=InnoDB" kind="object">
+      <column name="id" type="BIGINT UNSIGNED" null="false"/>
+      <column name="Key" type="BIGINT UNSIGNED" null="false"/>
+      <column name="targetKey" type="BIGINT UNSIGNED" null="false"/>
+      <column name="targetNewState" type="INT UNSIGNED" null="false"/>
+      <primary-key auto="true">
+        <column name="id"/>
+      </primary-key>
+      <foreign-key name="MHJDeviceVirtualDefine_Key_fk" deferrable="DEFERRED">
+        <column name="Key"/>
+        <references table="MHJDeviceChild">
+          <column name="id"/>
+        </references>
+      </foreign-key>
+      <foreign-key name="MHJDeviceVirtualDefine_targetKey_fk" deferrable="DEFERRED">
+        <column name="targetKey"/>
+        <references table="MHJDeviceChild">
+          <column name="id"/>
+        </references>
+      </foreign-key>
+      <index name="Key_i">
+        <column name="Key"/>
+      </index>
+      <index name="targetKey_i">
+        <column name="targetKey"/>
+      </index>
+    </add-table>
+    <alter-table name="MHJDeviceAuthorize">
+      <drop-foreign-key name="MHJDeviceAuthorize_child_fk"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="20">
+    <alter-table name="MHJDeviceAuthorize">
+      <add-column name="child" type="BIGINT UNSIGNED" null="false"/>
+      <add-foreign-key name="MHJDeviceAuthorize_child_fk" deferrable="DEFERRED">
+        <column name="child"/>
+        <references table="MHJDeviceChild">
+          <column name="id"/>
+        </references>
+      </add-foreign-key>
+      <add-index name="child_i">
+        <column name="child"/>
+      </add-index>
+    </alter-table>
+  </changeset>
+
+  <changeset version="19">
+    <alter-table name="MHJDeviceBase">
+      <drop-column name="softVer"/>
+      <drop-column name="newSoftUrl"/>
+      <drop-column name="newSoftVer"/>
+    </alter-table>
+    <alter-table name="MHJDeviceActivation">
+      <add-column name="softVer" type="TEXT" null="true"/>
+      <add-column name="newSoftUrl" type="TEXT" null="true"/>
+      <add-column name="newSoftVer" type="TEXT" null="true"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="18">
+    <alter-table name="MHJDeviceBase">
+      <add-column name="softVer" type="TEXT" null="true"/>
+      <add-column name="newSoftUrl" type="TEXT" null="true"/>
+      <add-column name="newSoftVer" type="TEXT" null="true"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="17">
+    <drop-table name="admin_entity"/>
+  </changeset>
+
+  <changeset version="16">
+    <drop-table name="user_entity"/>
+  </changeset>
+
+  <changeset version="15">
+    <alter-table name="user_entity">
+      <add-column name="userToken" type="CHAR(255)" null="true"/>
+      <drop-column name="usertoken"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="14">
+    <alter-table name="user_entity">
+      <add-column name="usertoken" type="CHAR(255)" null="true"/>
+      <drop-column name="usertitle"/>
+      <drop-column name="userToken"/>
+    </alter-table>
+    <alter-table name="admin_entity">
+      <add-column name="adminToken" type="CHAR(255)" null="true"/>
+      <drop-column name="userToken"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="13">
+    <add-table name="admin_entity" options="ENGINE=InnoDB" kind="object">
+      <column name="id" type="INT(11)" null="false"/>
+      <column name="UserName" type="LONGTEXT" null="false"/>
+      <column name="UserTitle" type="LONGTEXT" null="false"/>
+      <column name="Password" type="LONGTEXT" null="false"/>
+      <column name="userToken" type="CHAR(255)" null="true"/>
+      <column name="tokenReplaceTime" type="DATETIME" null="true"/>
+      <primary-key auto="true">
+        <column name="id"/>
+      </primary-key>
+      <index name="UserName_i">
+        <column name="UserName"/>
+      </index>
+      <index name="Password_i">
+        <column name="Password"/>
+      </index>
+    </add-table>
+  </changeset>
+
+  <changeset version="12">
+    <alter-table name="MHJDeviceActivation">
+      <drop-foreign-key name="MHJDeviceActivation_device_fk"/>
+      <drop-foreign-key name="MHJDeviceActivation_user_fk"/>
+    </alter-table>
+    <alter-table name="MHJDeviceAuthorize">
+      <drop-foreign-key name="MHJDeviceAuthorize_device_fk"/>
+      <drop-foreign-key name="MHJDeviceAuthorize_user_fk"/>
+      <drop-foreign-key name="MHJDeviceAuthorize_giveUser_fk"/>
+    </alter-table>
+    <alter-table name="user_entity">
+      <add-column name="usertitle" type="LONGTEXT" null="true"/>
+      <add-column name="userToken" type="CHAR(255)" null="true"/>
+      <add-column name="tokenReplaceTime" type="DATETIME" null="true"/>
+    </alter-table>
+    <alter-table name="MHJDeviceChild">
+      <drop-foreign-key name="MHJDeviceChild_device_fk"/>
+      <drop-foreign-key name="MHJDeviceChild_user_fk"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="11">
+    <alter-table name="MHJDeviceChild">
+      <add-column name="state" type="INT UNSIGNED" null="true"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="10">
+    <alter-table name="MHJDeviceBase">
+      <add-column name="virtualKeyCount" type="INT" null="true"/>
+      <add-column name="virtualKeyDefine" type="CHAR(255)" null="true"/>
+      <add-column name="switchKeyfCount" type="INT" null="true"/>
+      <drop-column name="virtualKyeCount"/>
+      <drop-column name="virtualKyeDefine"/>
+      <drop-column name="switchKyeCount"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="9">
+    <alter-table name="MHJDeviceBase">
+      <add-column name="deviceFlag" type="INT" null="true"/>
+      <add-index name="deviceType_i">
+        <column name="deviceType"/>
+      </add-index>
+      <add-index name="deviceFlag_i">
+        <column name="deviceFlag"/>
+      </add-index>
+    </alter-table>
+  </changeset>
+
+  <changeset version="8">
+    <alter-table name="MHJDeviceActivation">
+      <add-column name="DeviceName" type="TEXT" null="true"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="7">
+    <alter-table name="MHJDeviceChild">
+      <add-column name="KeyDefine" type="INT UNSIGNED" null="true"/>
+      <drop-column name="KyeDefine"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="6">
+    <alter-table name="user_entity">
+      <add-column name="UserTitle" type="LONGTEXT" null="false"/>
+    </alter-table>
+    <add-table name="MHJDeviceChild" options="ENGINE=InnoDB" kind="object">
+      <column name="id" type="BIGINT UNSIGNED" null="false"/>
+      <column name="device" type="BIGINT UNSIGNED" null="false"/>
+      <column name="keyID" type="BIGINT UNSIGNED" null="false"/>
+      <column name="Name" type="TEXT" null="false"/>
+      <column name="user" type="INT(11)" null="false"/>
+      <column name="KyeDefine" type="INT UNSIGNED" null="true"/>
+      <primary-key auto="true">
+        <column name="id"/>
+      </primary-key>
+      <foreign-key name="MHJDeviceChild_device_fk" deferrable="DEFERRED">
+        <column name="device"/>
+        <references table="MHJDeviceBase">
+          <column name="id"/>
+        </references>
+      </foreign-key>
+      <foreign-key name="MHJDeviceChild_user_fk" deferrable="DEFERRED">
+        <column name="user"/>
+        <references table="user_entity">
+          <column name="id"/>
+        </references>
+      </foreign-key>
+      <index name="device_i">
+        <column name="device"/>
+      </index>
+      <index name="keyID_i">
+        <column name="keyID"/>
+      </index>
+      <index name="user_i">
+        <column name="user"/>
+      </index>
+    </add-table>
+  </changeset>
+
+  <changeset version="5">
+    <add-table name="MHJDeviceAuthorize" options="ENGINE=InnoDB" kind="object">
+      <column name="id" type="BIGINT UNSIGNED" null="false"/>
+      <column name="device" type="BIGINT UNSIGNED" null="false"/>
+      <column name="startDate" type="DATETIME" null="false"/>
+      <column name="endDate" type="DATETIME" null="false"/>
+      <column name="user" type="INT(11)" null="false"/>
+      <column name="giveUser" type="INT(11)" null="false"/>
+      <column name="giveType" type="INT" null="false"/>
+      <primary-key auto="true">
+        <column name="id"/>
+      </primary-key>
+      <foreign-key name="MHJDeviceAuthorize_device_fk" deferrable="DEFERRED">
+        <column name="device"/>
+        <references table="MHJDeviceBase">
+          <column name="id"/>
+        </references>
+      </foreign-key>
+      <foreign-key name="MHJDeviceAuthorize_user_fk" deferrable="DEFERRED">
+        <column name="user"/>
+        <references table="user_entity">
+          <column name="id"/>
+        </references>
+      </foreign-key>
+      <foreign-key name="MHJDeviceAuthorize_giveUser_fk" deferrable="DEFERRED">
+        <column name="giveUser"/>
+        <references table="user_entity">
+          <column name="id"/>
+        </references>
+      </foreign-key>
+      <index name="device_i">
+        <column name="device"/>
+      </index>
+      <index name="user_i">
+        <column name="user"/>
+      </index>
+      <index name="giveUser_i">
+        <column name="giveUser"/>
+      </index>
+    </add-table>
+  </changeset>
+
+  <changeset version="4">
+    <alter-table name="MHJDeviceActivation">
+      <add-column name="device" type="BIGINT UNSIGNED" null="false"/>
+      <add-column name="user" type="INT(11)" null="false"/>
+      <add-foreign-key name="MHJDeviceActivation_device_fk" deferrable="DEFERRED">
+        <column name="device"/>
+        <references table="MHJDeviceBase">
+          <column name="id"/>
+        </references>
+      </add-foreign-key>
+      <add-foreign-key name="MHJDeviceActivation_user_fk" deferrable="DEFERRED">
+        <column name="user"/>
+        <references table="user_entity">
+          <column name="id"/>
+        </references>
+      </add-foreign-key>
+      <add-index name="device_i">
+        <column name="device"/>
+      </add-index>
+      <add-index name="user_i">
+        <column name="user"/>
+      </add-index>
+      <drop-index name="deviceID_i"/>
+      <drop-column name="deviceID"/>
+      <drop-column name="phone"/>
+      <drop-column name="username"/>
+      <drop-column name="userIdentity"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="3">
+    <alter-table name="MHJDeviceBase">
+      <add-column name="virtualKyeCount" type="INT" null="true"/>
+      <add-column name="virtualKyeDefine" type="CHAR(255)" null="true"/>
+      <add-column name="switchKyeCount" type="INT" null="true"/>
+    </alter-table>
+  </changeset>
+
+  <changeset version="2"/>
+
+  <model version="1">
+    <table name="MHJDeviceBase" options="ENGINE=InnoDB" kind="object">
+      <column name="id" type="BIGINT UNSIGNED" null="false"/>
+      <column name="deviceID" type="INT" null="false"/>
+      <column name="idsecurity" type="INT" null="true"/>
+      <column name="deviceType" type="INT" null="false"/>
+      <column name="security" type="CHAR(32)" null="true"/>
+      <column name="createDate" type="DATETIME" null="false"/>
+      <column name="createUser" type="TEXT" null="false"/>
+      <column name="createVerification" type="TINYINT(1)" null="true"/>
+      <column name="productionDate" type="DATETIME" null="true"/>
+      <column name="productionUser" type="TEXT" null="true"/>
+      <column name="activationDate" type="DATETIME" null="true"/>
+      <primary-key auto="true">
+        <column name="id"/>
+      </primary-key>
+      <index name="deviceID_i">
+        <column name="deviceID"/>
+      </index>
+      <index name="idsecurity_i">
+        <column name="idsecurity"/>
+      </index>
+    </table>
+    <table name="MHJDeviceActivation" options="ENGINE=InnoDB" kind="object">
+      <column name="id" type="BIGINT UNSIGNED" null="false"/>
+      <column name="deviceID" type="INT UNSIGNED" null="false"/>
+      <column name="Date" type="DATETIME" null="false"/>
+      <column name="ip" type="TEXT" null="false"/>
+      <column name="mac" type="TEXT" null="true"/>
+      <column name="phone" type="TEXT" null="false"/>
+      <column name="username" type="TEXT" null="false"/>
+      <column name="userIdentity" type="TEXT" null="false"/>
+      <primary-key auto="true">
+        <column name="id"/>
+      </primary-key>
+      <index name="deviceID_i">
+        <column name="deviceID"/>
+      </index>
+    </table>
+    <table name="user_entity" options="ENGINE=InnoDB" kind="object">
+      <column name="id" type="INT(11)" null="false"/>
+      <column name="UserName" type="LONGTEXT" null="false"/>
+      <column name="Password" type="LONGTEXT" null="false"/>
+      <column name="sex" type="INT" null="true"/>
+      <column name="Phone" type="LONGTEXT" null="true"/>
+      <column name="Email" type="LONGTEXT" null="true"/>
+      <primary-key auto="true">
+        <column name="id"/>
+      </primary-key>
+      <index name="UserName_i">
+        <column name="UserName"/>
+      </index>
+      <index name="Password_i">
+        <column name="Password"/>
+      </index>
+    </table>
+  </model>
+</changelog>
