@@ -17,6 +17,6 @@ MHJSpserverLib：spServer代码集成，因原官网上的代码有几处小问�
 
 2、Tcp数据包加密，采用256位异或加密，每个设备都有自己的256位密钥，同时每次会话还会产生临时密钥，保证数据交互安全。
 
-3、设备密钥储存在mysql服务器，访问数据库中间件采用ODB（ODB项目地址：http://www.codesynthesis.com/products/odb/）。
+3、设备密钥储存在mysql服务器，访问数据库中间件采用ODB（ODB项目地址：https://code.google.com/archive/p/spserver/ ）。
 
 4、底层和协议定义文件共用，减少其他客户端的底层调试工作量，底层移植到IOS、Android平台。
